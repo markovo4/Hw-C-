@@ -19,23 +19,22 @@ void all_files(string path, string mask)
     while (success != -1)
     {
         // если папка:
-        if (fileinfo.attrib & 16 &&
+        if (fileinfo.attrib & _A_SUBDIR &&
             string(fileinfo.name) != "." &&
             string(fileinfo.name) != "..")
         {
             string new_path = path;
             new_path += fileinfo.name;
             new_path += "\\";
-            all_files(new_path, "*.txt"); // <<< recursive call
+            all_files(new_path, "*.*");
         }
-
             // если файл:
         else
         {
-            if (string(fileinfo.name) != "." &&
-                string(fileinfo.name) != "..")
+            size_t extension_pos = string(fileinfo.name).find_last_of(".");
+            if (extension_pos != string::npos && string(fileinfo.name).substr(extension_pos) == ".txt")
             {
-                bitset<32> set = fileinfo.attrib;
+                bitset<32> set(fileinfo.attrib);
                 cout << set << " - " << path << fileinfo.name << "\n";
                 k++;
             }
@@ -57,4 +56,5 @@ int main()
 
     cout << "Total files count: " << k << "\n";
     system("pause");
+    return 0;
 }
