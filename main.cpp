@@ -7,7 +7,6 @@ void pow(double* X, double* Y);
 int main() {
     double A;
     double B;
-    pow(3, 3);
     cin >> A;
     cin >> B;
     pow(&A, &B);
